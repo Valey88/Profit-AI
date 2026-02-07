@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест виджета Profit Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #a855f7;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .cta {
+            text-align: center;
+            padding: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .cta h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .instruction {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            font-family: monospace;
+            text-align: center;
+            color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 Profit Flow AI</h1>
+        <p class="subtitle">Умный AI-ассистент для вашего бизнеса</p>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>💬 24/7 Поддержка</h3>
+                <p>AI-агент отвечает на вопросы клиентов круглосуточно, без выходных и перерывов.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎯 Умные ответы</h3>
+                <p>Использует базу знаний вашей компании для точных и релевантных ответов.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Аналитика</h3>
+                <p>Отслеживайте все диалоги и получайте инсайты о потребностях клиентов.</p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2>Попробуйте прямо сейчас! ⬇️</h2>
+            <p>Нажмите на пузырек в правом нижнем углу, чтобы начать диалог с AI</p>
+            <a href="#" class="cta-button" onclick="alert('Начните чат с виджетом!'); return false;">Узнать больше</a>
+        </div>
+
+        <div class="instruction">
+            ✅ Виджет активен — нажмите на кнопку чата справа внизу!
+        </div>
+    </div>
+
+    <!-- Profit Flow Widget -->
+    <script>
+        window.PROFIT_FLOW_API = 'http://localhost:8001';
+    </script>
+    <script src="http://localhost:8001/widget.js?v=2"></script>
+</body>
+
+</html>
