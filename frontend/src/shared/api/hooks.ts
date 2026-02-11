@@ -158,7 +158,17 @@ export function useDeleteKnowledge() {
 
 export const userKeys = {
     all: ['users'] as const,
+    me: ['users', 'me'] as const,
 };
+
+// Get current user
+export function useMe() {
+    return useQuery({
+        queryKey: userKeys.me,
+        queryFn: api.getMe,
+        retry: false,
+    });
+}
 
 // Get all users
 export function useUsers() {
@@ -202,6 +212,19 @@ export function useDeleteUser() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: userKeys.all });
         },
+    });
+}
+
+// --- ADMIN HOOKS ---
+
+export const adminKeys = {
+    users: (skip: number, limit: number) => ['admin', 'users', skip, limit] as const,
+};
+
+export function useAdminUsers(skip: number = 0, limit: number = 100) {
+    return useQuery({
+        queryKey: adminKeys.users(skip, limit),
+        queryFn: () => api.getAdminUsers(skip, limit),
     });
 }
 

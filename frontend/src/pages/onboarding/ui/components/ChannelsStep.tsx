@@ -16,32 +16,32 @@ export const ChannelsStep: React.FC<ChannelsStepProps> = ({ connectedChannels, o
             <p className="text-zinc-500 mb-10 text-center">Где ваш AI-ассистент будет общаться с клиентами?</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Telegram Bot */}
+                {/* VK Bot */}
                 <div
-                    onClick={() => onConfigure('telegram')}
-                    className={`group relative p-8 rounded-3xl border cursor-pointer transition-all hover:scale-[1.02] overflow-hidden ${isConnected('telegram') ? 'bg-indigo-500/10 border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.2)]' : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'}`}
+                    onClick={() => onConfigure('vk')}
+                    className={`group relative p-8 rounded-3xl border cursor-pointer transition-all hover:scale-[1.02] overflow-hidden ${isConnected('vk') ? 'bg-blue-500/10 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.2)]' : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'}`}
                 >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-indigo-500/20 transition-colors"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-blue-500/20 transition-colors"></div>
 
                     <div className="flex justify-between items-start mb-6 relative z-10">
                         <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-colors">
-                            <MessageCircle className="w-7 h-7 text-indigo-400" />
+                            <span className="font-bold text-xl text-blue-500">VK</span>
                         </div>
-                        {isConnected('telegram') && (
-                            <div className="w-8 h-8 bg-indigo-500/20 rounded-full flex items-center justify-center border border-indigo-500/30">
-                                <Check className="w-4 h-4 text-indigo-400" />
+                        {isConnected('vk') && (
+                            <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center border border-blue-500/30">
+                                <Check className="w-4 h-4 text-blue-400" />
                             </div>
                         )}
                     </div>
 
-                    <h3 className="font-bold text-2xl text-white mb-2">Telegram Bot</h3>
+                    <h3 className="font-bold text-2xl text-white mb-2">ВКонтакте</h3>
                     <p className="text-zinc-500 text-sm leading-relaxed mb-6">
-                        Классический чат-бот. Работает 24/7. <br />
-                        <span className="text-indigo-400 font-medium">Рекомендуемый старт.</span>
+                        Сообщества и боты VK. <br />
+                        <span className="text-blue-400 font-medium">Популярно в РФ.</span>
                     </p>
 
                     <div className="flex items-center gap-2 text-xs font-bold text-zinc-600 uppercase tracking-wider">
-                        <Smartphone className="w-3 h-3" /> Mobile First
+                        <Smartphone className="w-3 h-3" /> Social
                     </div>
                 </div>
 
@@ -71,6 +71,54 @@ export const ChannelsStep: React.FC<ChannelsStepProps> = ({ connectedChannels, o
 
                     <div className="flex items-center gap-2 text-xs font-bold text-zinc-600 uppercase tracking-wider">
                         <Globe className="w-3 h-3" /> Web SDK
+                    </div>
+                </div>
+
+                {/* Telegram Bot (Disabled) */}
+                <div
+                    className="group relative p-8 rounded-3xl border border-white/5 bg-white/[0.02] opacity-60 grayscale cursor-not-allowed overflow-hidden"
+                >
+                    <div className="flex justify-between items-start mb-6 relative z-10">
+                        <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
+                            <MessageCircle className="w-7 h-7 text-zinc-500" />
+                        </div>
+                        <div className="px-3 py-1 bg-white/10 rounded-full border border-white/10 text-[10px] font-bold text-zinc-400 uppercase tracking-wide">
+                            Скоро
+                        </div>
+                    </div>
+
+                    <h3 className="font-bold text-2xl text-zinc-400 mb-2">Telegram Bot</h3>
+                    <p className="text-zinc-600 text-sm leading-relaxed mb-6">
+                        Временно недоступно. <br />
+                        Ведутся технические работы.
+                    </p>
+
+                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-700 uppercase tracking-wider">
+                        <Smartphone className="w-3 h-3" /> Mobile First
+                    </div>
+                </div>
+
+                {/* Avito (Disabled) */}
+                <div
+                    className="group relative p-8 rounded-3xl border border-white/5 bg-white/[0.02] opacity-60 grayscale cursor-not-allowed overflow-hidden"
+                >
+                    <div className="flex justify-between items-start mb-6 relative z-10">
+                        <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10">
+                            <span className="font-bold text-zinc-500 text-xl">Av</span>
+                        </div>
+                        <div className="px-3 py-1 bg-white/10 rounded-full border border-white/10 text-[10px] font-bold text-zinc-400 uppercase tracking-wide">
+                            Скоро
+                        </div>
+                    </div>
+
+                    <h3 className="font-bold text-2xl text-zinc-400 mb-2">Avito</h3>
+                    <p className="text-zinc-600 text-sm leading-relaxed mb-6">
+                        Автоответы на сообщения. <br />
+                        Интеграция в разработке.
+                    </p>
+
+                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-700 uppercase tracking-wider">
+                        <Smartphone className="w-3 h-3" /> Classifieds
                     </div>
                 </div>
             </div>

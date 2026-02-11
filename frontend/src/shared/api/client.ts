@@ -283,6 +283,17 @@ export const api = {
 
     // --- USER ENDPOINTS ---
 
+    async getMe(): Promise<User> {
+        const token = localStorage.getItem('auth_token');
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (!response.ok) throw new Error('Failed to fetch current user');
+        return response.json();
+    },
+
     async getUsers(): Promise<User[]> {
         const response = await fetch(`${API_BASE_URL}/users/`);
         if (!response.ok) throw new Error('Failed to fetch users');
@@ -314,6 +325,19 @@ export const api = {
             method: 'DELETE',
         });
         if (!response.ok) throw new Error('Failed to delete user');
+    },
+
+    // --- ADMIN ENDPOINTS ---
+
+    async getAdminUsers(skip: number = 0, limit: number = 100): Promise<{ users: User[], total: number }> {
+        const token = localStorage.getItem('auth_token');
+        const response = await fetch(`${API_BASE_URL}/admin/users?skip=${skip}&limit=${limit}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (!response.ok) throw new Error('Failed to fetch admin users');
+        return response.json();
     },
 
     // --- BILLING ENDPOINTS ---

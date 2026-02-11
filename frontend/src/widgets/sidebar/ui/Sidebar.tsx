@@ -8,10 +8,11 @@ import {
   Zap,
   Settings,
   HelpCircle,
-  RotateCcw
+  RotateCcw,
+  Shield
 } from 'lucide-react';
 import type { Page } from '@/app/App';
-import { MOCK_USER } from '@/shared/lib/constants';
+import { useMe } from '@/shared/api/hooks';
 
 interface SidebarProps {
   currentPage: Page;
@@ -21,6 +22,10 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate, onLogout, onRestartOnboarding }) => {
+  const { data: user } = useMe();
+
+  const isAdmin = user?.role === 'admin' || user?.role === 'owner';
+
   const navItems: { id: Page; label: string; icon: React.ElementType }[] = [
     { id: 'inbox', label: 'Входящие', icon: MessageSquare },
     { id: 'agent', label: 'AI Агент', icon: Bot },
@@ -28,6 +33,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate, onLog
     { id: 'team', label: 'Команда', icon: Users },
     { id: 'billing', label: 'Тарифы', icon: CreditCard },
   ];
+
+  if (isAdmin) {
+    navItems.push({ id: 'admin', label: 'Admin Panel', icon: Shield });
+  }
 
   return (
     <aside className="w-[260px] glass-panel flex flex-col h-full shrink-0 z-50">
@@ -90,11 +99,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onNavigate, onLog
       <div className="p-4 border-t border-white/5">
         <div className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group border border-transparent hover:border-white/5">
           <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-white font-bold text-xs ring-2 ring-transparent group-hover:ring-zinc-700 transition-all">
-            {MOCK_USER.name.charAt(0)}
+            {user?.full_name?.charAt(0) || user?.email?.charAt(0) || '?'}
           </div>
           <div className="overflow-hidden flex-1">
-            <p className="text-xs font-semibold text-zinc-200 truncate">{MOCK_USER.name}</p>
-            <p className="text-[10px] text-zinc-500 truncate group-hover:text-zinc-400">{MOCK_USER.email}</p>
+            <p className="text-xs font-semibold text-zinc-200 truncate">{user?.full_name || 'User'}</p>
+            <p className="text-[10px] text-zinc-500 truncate group-hover:text-zinc-400">{user?.email || 'Loading...'}</p>
           </div>
           <button
             onClick={(e) => {

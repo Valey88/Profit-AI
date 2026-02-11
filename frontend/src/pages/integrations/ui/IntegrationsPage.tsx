@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, ShoppingBag, Check, Zap, Instagram, Smartphone, X, Loader2, Plus, AlertCircle } from 'lucide-react';
+import { MessageCircle, ShoppingBag, Instagram, Smartphone, X, Loader2, Plus, AlertCircle, Globe } from 'lucide-react';
 import { useCompany, useConnectChannel, useDisconnectChannel } from '@/shared/api/hooks';
 
 export const IntegrationsPage: React.FC = () => {
@@ -13,9 +13,7 @@ export const IntegrationsPage: React.FC = () => {
     const [tgToken, setTgToken] = useState('');
     const [avitoId, setAvitoId] = useState('');
     const [avitoSecret, setAvitoSecret] = useState('');
-    const [tgUserPhone, setTgUserPhone] = useState('');
-    const [tgUserApiId, setTgUserApiId] = useState('');
-    const [tgUserApiHash, setTgUserApiHash] = useState('');
+    const [vkToken, setVkToken] = useState('');
 
     const isConnected = (type: string) => company?.channels.some(c => c.type === type && c.status === 'connected');
 
@@ -48,9 +46,7 @@ export const IntegrationsPage: React.FC = () => {
         setTgToken('');
         setAvitoId('');
         setAvitoSecret('');
-        setTgUserPhone('');
-        setTgUserApiId('');
-        setTgUserApiHash('');
+        setVkToken('');
     };
 
     if (isLoading) {
@@ -63,25 +59,35 @@ export const IntegrationsPage: React.FC = () => {
 
     const channels = [
         {
+            id: 'vk',
+            name: 'ВКонтакте',
+            desc: 'Сообщества и боты VK.',
+            icon: Smartphone,
+            color: 'text-blue-400',
+            bg: 'bg-blue-500/10',
+            border: 'border-blue-500/20'
+        },
+        {
+            id: 'widget',
+            name: 'Виджет на сайт',
+            desc: 'Онлайн-чат для ваших посетителей.',
+            icon: Globe,
+            color: 'text-cyan-400',
+            bg: 'bg-cyan-500/10',
+            border: 'border-cyan-500/20'
+        },
+        {
             id: 'telegram',
             name: 'Telegram Bot',
-            desc: 'Официальный бот для общения с клиентами.',
+            desc: 'Временно недоступно.',
             icon: MessageCircle,
             color: 'text-indigo-400',
             bg: 'bg-indigo-500/10',
-            border: 'border-indigo-500/20'
+            border: 'border-indigo-500/20',
+            disabled: true
         },
         {
-            id: 'tgUser', // Note: backend uses 'telegram' type potentially for both or discerns by config? 
-            // The backend model has ChannelType.TELEGRAM. 
-            // To distinguish Userbot, we normally use a different type or config flag.
-            // For simplicity here, assuming 'tgUser' maps to a channel type or config.
-            // Let's assume frontend logic for now, but backend service maps 'tgUser' -> 'telegram' type with different config?
-            // Actually, OnboardingPage used 'telegram' vs 'tgUser' button clicks but passed 'telegram' type?
-            // Checking OnboardingPage: onClick={() => setConfiguringChannel('telegram')} vs 'tgUser'.
-            // But step 2 only had 'telegram' implemented in my last code?
-            // Wait, I see 'Telegram Userbot' as disabled in my OnboardingPage rewrite (grayed out).
-            // So I will keep it disabled here too or just a placeholder.
+            id: 'tgUser',
             name: 'Telegram Userbot',
             desc: 'Личный аккаунт (MTProto).',
             icon: Smartphone,
@@ -93,11 +99,12 @@ export const IntegrationsPage: React.FC = () => {
         {
             id: 'avito',
             name: 'Avito',
-            desc: 'Интеграция с чатами Авито.',
+            desc: 'Интеграция в разработке.',
             icon: ShoppingBag,
             color: 'text-orange-400',
             bg: 'bg-orange-500/10',
-            border: 'border-orange-500/20'
+            border: 'border-orange-500/20',
+            disabled: true
         },
         {
             id: 'instagram',
@@ -167,8 +174,8 @@ export const IntegrationsPage: React.FC = () => {
                                         onClick={() => !channel.disabled && setConfiguringChannel(channel.id)}
                                         disabled={channel.disabled}
                                         className={`w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${channel.disabled
-                                                ? 'bg-white/5 text-zinc-600'
-                                                : 'bg-white text-black hover:bg-zinc-200 shadow-[0_0_15px_rgba(255,255,255,0.1)]'
+                                            ? 'bg-white/5 text-zinc-600'
+                                            : 'bg-white text-black hover:bg-zinc-200 shadow-[0_0_15px_rgba(255,255,255,0.1)]'
                                             }`}
                                     >
                                         <Plus className="w-4 h-4" />
@@ -253,6 +260,48 @@ export const IntegrationsPage: React.FC = () => {
                                 <button
                                     onClick={() => handleConnect('avito', { id: avitoId, secret: avitoSecret })}
                                     disabled={!avitoId || !avitoSecret || connectChannelMutation.isPending}
+                                    className="w-full bg-white text-black py-3 rounded-xl font-bold hover:bg-zinc-200 transition-colors mt-2 flex items-center justify-center gap-2 disabled:opacity-50"
+                                >
+                                    {connectChannelMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                                    Подключить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {configuringChannel === 'vk' && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+                        <div className="bg-[#1a1a1a] border border-white/10 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+                            <div className="p-6 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                                <h3 className="font-bold text-lg text-white flex items-center gap-2">
+                                    <Smartphone className="w-5 h-5 text-blue-400" /> ВКонтакте
+                                </h3>
+                                <button onClick={() => setConfiguringChannel(null)} className="text-zinc-500 hover:text-white"><X className="w-5 h-5" /></button>
+                            </div>
+
+                            <div className="p-6 space-y-4">
+                                <div className="bg-white/5 p-4 rounded-xl border border-white/5 mb-2">
+                                    <p className="text-xs text-zinc-400 mb-2">1. Создайте сообщество ВКонтакте</p>
+                                    <p className="text-xs text-zinc-400 mb-2">2. В настройках API создайте ключ доступа</p>
+                                    <p className="text-xs text-zinc-400">3. Включите Long Poll API (версия 5.131+)</p>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Token сообщества</label>
+                                    <input
+                                        type="text"
+                                        autoFocus
+                                        value={vkToken}
+                                        onChange={(e) => setVkToken(e.target.value)}
+                                        placeholder="vk1.a..."
+                                        className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none text-sm text-white placeholder-zinc-600 font-mono"
+                                    />
+                                </div>
+
+                                <button
+                                    onClick={() => handleConnect('vk', { token: vkToken })}
+                                    disabled={!vkToken || connectChannelMutation.isPending}
                                     className="w-full bg-white text-black py-3 rounded-xl font-bold hover:bg-zinc-200 transition-colors mt-2 flex items-center justify-center gap-2 disabled:opacity-50"
                                 >
                                     {connectChannelMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}

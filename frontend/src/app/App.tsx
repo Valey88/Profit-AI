@@ -7,11 +7,13 @@ import { TeamPage } from '@/pages/team/ui/TeamPage';
 import { BillingPage } from '@/pages/billing/ui/BillingPage';
 import { OnboardingPage } from '@/pages/onboarding/ui/OnboardingPage';
 import { IntegrationsPage } from '@/pages/integrations/ui/IntegrationsPage';
+import { LandingPage } from '@/pages/landing/ui/LandingPage';
+import { AdminPage } from '@/pages/admin/ui/AdminPage';
 import { LoginPage, RegisterPage } from '@/pages/auth';
 import { useCompany, useAgentConfig } from '@/shared/api/hooks';
 import { Loader2 } from 'lucide-react';
 
-export type Page = 'inbox' | 'agent' | 'team' | 'billing' | 'integrations';
+export type Page = 'inbox' | 'agent' | 'team' | 'billing' | 'integrations' | 'admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,10 +49,11 @@ function useAuth() {
 
 // Check if onboarding is needed
 function useOnboardingCheck() {
-  const { data: company, isLoading: companyLoading } = useCompany();
-  const { data: agent, isLoading: agentLoading } = useAgentConfig();
+  const { data: company, isLoading: companyLoading, error: companyError } = useCompany();
+  const { data: agent, isLoading: agentLoading, error: agentError } = useAgentConfig();
 
   const isLoading = companyLoading || agentLoading;
+  const error = companyError || agentError;
 
   // Check localStorage for manual skip
   const hasCompletedOnboarding = localStorage.getItem('onboarding_completed') === 'true';
@@ -63,12 +66,12 @@ function useOnboardingCheck() {
     !agent?.name
   );
 
-  return { needsOnboarding, isLoading };
+  return { needsOnboarding, isLoading, error };
 }
 
 // Main dashboard content
 const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-  const { needsOnboarding, isLoading } = useOnboardingCheck();
+  const { needsOnboarding, isLoading, error } = useOnboardingCheck();
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState<Page>('inbox');
 
@@ -82,6 +85,24 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     localStorage.setItem('onboarding_completed', 'true');
     setShowOnboarding(false);
   };
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-4 text-center">
+        <Loader2 className="w-12 h-12 text-red-500 mb-4" />
+        <h2 className="text-xl font-bold mb-2">Нет соединения с сервером</h2>
+        <p className="text-zinc-500 mb-6 max-w-md">
+          Не удалось загрузить данные. Возможно сервер отключен или обновляется.
+        </p>
+        <button
+          onClick={onLogout}
+          className="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-zinc-200 transition-colors"
+        >
+          Вернуться на главную
+        </button>
+      </div>
+    );
+  }
 
   // Show loading while checking
   if (isLoading || showOnboarding === null) {
@@ -113,6 +134,7 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         {currentPage === 'team' && <TeamPage />}
         {currentPage === 'billing' && <BillingPage />}
         {currentPage === 'integrations' && <IntegrationsPage />}
+        {currentPage === 'admin' && <AdminPage />}
       </main>
     </div>
   );
@@ -121,10 +143,19 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 // Inner component that uses hooks
 const AppContent: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
-  const [authPage, setAuthPage] = useState<'login' | 'register'>('login');
+  const [authPage, setAuthPage] = useState<'landing' | 'login' | 'register'>('landing');
 
-  // Not authenticated - show login/register
+  // Not authenticated - show landing/login/register
   if (!isAuthenticated) {
+    if (authPage === 'landing') {
+      return (
+        <LandingPage
+          onLogin={() => setAuthPage('login')}
+          onRegister={() => setAuthPage('register')}
+        />
+      );
+    }
+
     if (authPage === 'register') {
       return (
         <RegisterPage

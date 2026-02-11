@@ -48,6 +48,8 @@ from src.modules.users.router import router as user_router
 from src.modules.billing.router import router as billing_router
 from src.modules.onboarding.router import router as onboarding_router
 from src.modules.integrations.telegram.router import router as telegram_router
+from src.modules.integrations.vk.router import router as vk_router
+from src.modules.admin.router import router as admin_router
 from src.modules.auth.router import router as auth_router
 
 fastapi_app.include_router(auth_router)
@@ -58,6 +60,8 @@ fastapi_app.include_router(user_router)
 fastapi_app.include_router(billing_router)
 fastapi_app.include_router(onboarding_router)
 fastapi_app.include_router(telegram_router)
+fastapi_app.include_router(vk_router)
+fastapi_app.include_router(admin_router)
 
 # Serve widget.js directly
 @fastapi_app.get("/widget.js")
