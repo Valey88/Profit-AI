@@ -71,6 +71,9 @@ fastapi_app.include_router(telegram_router)
 fastapi_app.include_router(vk_router)
 fastapi_app.include_router(admin_router)
 
+from src.modules.builder.router import router as builder_router
+fastapi_app.include_router(builder_router)
+
 # Serve widget.js directly
 @fastapi_app.get("/widget.js")
 async def get_widget():

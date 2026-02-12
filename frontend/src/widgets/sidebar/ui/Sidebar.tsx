@@ -10,7 +10,8 @@ import {
   HelpCircle,
   RotateCcw,
   Shield,
-  X
+  X,
+  Layout
 } from 'lucide-react';
 import type { Page } from '@/app/App';
 import { useMe } from '@/shared/api/hooks';
@@ -42,6 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'integrations', label: 'Интеграции', icon: Zap },
     { id: 'team', label: 'Команда', icon: Users },
     { id: 'billing', label: 'Тарифы', icon: CreditCard },
+    { id: 'builder', label: 'Конструктор', icon: Layout },
   ];
 
   if (isAdmin) {

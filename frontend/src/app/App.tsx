@@ -13,7 +13,9 @@ import { LoginPage, RegisterPage } from '@/pages/auth';
 import { useCompany, useAgentConfig } from '@/shared/api/hooks';
 import { Loader2 } from 'lucide-react';
 
-export type Page = 'inbox' | 'agent' | 'team' | 'billing' | 'integrations' | 'admin';
+import BuilderPage from '@/pages/builder/BuilderPage';
+
+export type Page = 'inbox' | 'agent' | 'team' | 'billing' | 'integrations' | 'admin' | 'builder';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -70,10 +72,13 @@ function useOnboardingCheck() {
 }
 
 // Main dashboard content
-const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+const DashboardContent: React.FC<{
+  onLogout: () => void;
+  currentPage: Page;
+  onNavigate: (page: Page) => void;
+}> = ({ onLogout, currentPage, onNavigate }) => {
   const { needsOnboarding, isLoading, error } = useOnboardingCheck();
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
-  const [currentPage, setCurrentPage] = useState<Page>('inbox');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -122,7 +127,7 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     <div className="flex h-screen w-full overflow-hidden text-zinc-100 bg-black">
       <Sidebar
         currentPage={currentPage}
-        onNavigate={setCurrentPage}
+        onNavigate={onNavigate}
         onLogout={onLogout}
         onRestartOnboarding={() => setShowOnboarding(true)}
         mobileIsOpen={isSidebarOpen}
@@ -174,6 +179,7 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 const AppContent: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const [authPage, setAuthPage] = useState<'landing' | 'login' | 'register'>('landing');
+  const [currentPage, setCurrentPage] = useState<Page>('inbox');
 
   // Not authenticated - show landing/login/register
   if (!isAuthenticated) {
@@ -207,8 +213,18 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // Authenticated - show dashboard
-  return <DashboardContent onLogout={logout} />;
+  // Authenticated - show dashboard or builder
+  if (currentPage === 'builder') {
+    return <BuilderPage onBack={() => setCurrentPage('admin')} />;
+  }
+
+  return (
+    <DashboardContent
+      onLogout={logout}
+      currentPage={currentPage}
+      onNavigate={setCurrentPage}
+    />
+  );
 };
 
 const App: React.FC = () => {
