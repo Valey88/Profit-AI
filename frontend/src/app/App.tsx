@@ -74,6 +74,7 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { needsOnboarding, isLoading, error } = useOnboardingCheck();
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState<Page>('inbox');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading) {
@@ -118,23 +119,52 @@ const DashboardContent: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden text-zinc-100">
+    <div className="flex h-screen w-full overflow-hidden text-zinc-100 bg-black">
       <Sidebar
         currentPage={currentPage}
         onNavigate={setCurrentPage}
         onLogout={onLogout}
         onRestartOnboarding={() => setShowOnboarding(true)}
+        mobileIsOpen={isSidebarOpen}
+        onMobileClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative w-full">
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-900/20 via-zinc-900/0 to-zinc-900/0"></div>
 
-        {currentPage === 'inbox' && <InboxPage />}
-        {currentPage === 'agent' && <AgentSettingsPage />}
-        {currentPage === 'team' && <TeamPage />}
-        {currentPage === 'billing' && <BillingPage />}
-        {currentPage === 'integrations' && <IntegrationsPage />}
-        {currentPage === 'admin' && <AdminPage />}
+        {/* Mobile Header with Hamburger */}
+        <div className="md:hidden flex items-center p-4 border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-30 shrink-0">
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 -ml-2 text-zinc-400 hover:text-white transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <span className="ml-3 font-bold text-sm">Profit Flow</span>
+        </div>
+
+        <div className="flex-1 overflow-y-auto custom-scrollbar relative z-10">
+          {currentPage === 'inbox' && <InboxPage />}
+          {currentPage === 'agent' && <AgentSettingsPage />}
+          {currentPage === 'team' && <TeamPage />}
+          {currentPage === 'billing' && <BillingPage />}
+          {currentPage === 'integrations' && <IntegrationsPage />}
+          {currentPage === 'admin' && <AdminPage />}
+        </div>
       </main>
     </div>
   );

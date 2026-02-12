@@ -12,8 +12,8 @@ export const ChannelsStep: React.FC<ChannelsStepProps> = ({ connectedChannels, o
 
     return (
         <div className="w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <h2 className="text-4xl font-light text-white mb-3 text-center">Выбор Каналов</h2>
-            <p className="text-zinc-500 mb-10 text-center">Где ваш AI-ассистент будет общаться с клиентами?</p>
+            <h2 className="text-2xl md:text-4xl font-light text-white mb-3 text-center">Выбор Каналов</h2>
+            <p className="text-zinc-500 mb-10 text-center text-sm md:text-base">Где ваш AI-ассистент будет общаться с клиентами?</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* VK Bot */}

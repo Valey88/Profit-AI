@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Shield, Users, CreditCard, MoreHorizontal, Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { Shield, MoreHorizontal, Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { API_BASE_URL } from '@/shared/api/client';
 
 interface AdminUser {
     id: number;
@@ -23,7 +24,7 @@ export const AdminPage: React.FC = () => {
         queryKey: ['admin', 'users'],
         queryFn: async () => {
             const token = localStorage.getItem('auth_token');
-            const res = await axios.get<UserListResponse>('http://localhost:8001/admin/users', {
+            const res = await axios.get<UserListResponse>(`${API_BASE_URL}/admin/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
@@ -62,8 +63,8 @@ export const AdminPage: React.FC = () => {
                     </div>
                 </header>
 
-                <div className="glass-card rounded-3xl overflow-hidden border border-white/10">
-                    <table className="w-full text-left border-collapse">
+                <div className="glass-card rounded-3xl overflow-hidden border border-white/10 overflow-x-auto">
+                    <table className="w-full text-left border-collapse min-w-[800px]">
                         <thead>
                             <tr className="bg-white/5 border-b border-white/10 text-xs font-bold text-zinc-500 uppercase tracking-wider">
                                 <th className="p-4 pl-6">User</th>
@@ -90,8 +91,8 @@ export const AdminPage: React.FC = () => {
                                     </td>
                                     <td className="p-4">
                                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border ${user.role === 'owner' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                                                user.role === 'admin' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
-                                                    'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                                            user.role === 'admin' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
+                                                'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
                                             }`}>
                                             {user.role}
                                         </span>

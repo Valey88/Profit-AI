@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Zap, Shield, Globe, Cpu, Headphones, Star, Users, Loader2 } from 'lucide-react';
+import { Check, Zap, Shield, Globe, Headphones, Star, Loader2 } from 'lucide-react';
 import { usePlans, useSubscription, useCreateSubscription, useCancelSubscription } from '@/shared/api/hooks';
 import type { Plan } from '@/shared/api/client';
 
@@ -52,7 +52,7 @@ export const BillingPage: React.FC = () => {
 
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h1 className="text-5xl font-extralight text-white tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl font-extralight text-white tracking-tight mb-6">
             Выберите <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">мощность</span>
           </h1>
           <p className="text-lg text-zinc-400">

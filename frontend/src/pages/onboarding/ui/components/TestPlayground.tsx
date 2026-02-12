@@ -45,18 +45,27 @@ export const TestPlayground: React.FC<TestPlaygroundProps> = ({ agentName, onFin
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 h-[600px] flex gap-8">
+        <div className="w-full max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 h-auto md:h-[600px] flex flex-col md:flex-row gap-6 md:gap-8 p-4 md:p-0">
 
             {/* Left: Info */}
-            <div className="w-1/3 pt-10">
-                <h2 className="text-4xl font-light text-white mb-4">Тест-драйв</h2>
-                <p className="text-zinc-500 mb-8 leading-relaxed">
+            <div className="w-full md:w-1/3 pt-0 md:pt-10 order-2 md:order-1">
+                <div className="flex items-center justify-between md:block mb-4">
+                    <h2 className="text-2xl md:text-4xl font-light text-white">Тест-драйв</h2>
+                    <div className="md:hidden">
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Online
+                        </span>
+                    </div>
+                </div>
+
+                <p className="text-zinc-500 mb-6 md:mb-8 leading-relaxed text-sm md:text-base hidden md:block">
                     Пообщайтесь с созданным агентом прямо сейчас. <br />
                     Это безопасная среда («песочница»).
                 </p>
 
                 <div className="space-y-4">
-                    <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <div className="bg-white/5 p-4 rounded-2xl border border-white/5 hidden md:block">
                         <h4 className="font-bold text-white mb-2 flex items-center gap-2">
                             <Sparkles className="w-4 h-4 text-indigo-400" /> Активные навыки
                         </h4>
@@ -69,7 +78,7 @@ export const TestPlayground: React.FC<TestPlaygroundProps> = ({ agentName, onFin
 
                     <button
                         onClick={onFinish}
-                        className="w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] mt-4"
+                        className="w-full bg-white text-black py-3 md:py-4 rounded-xl font-bold hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] mt-2 md:mt-4"
                     >
                         Завершить настройку
                     </button>
@@ -77,15 +86,18 @@ export const TestPlayground: React.FC<TestPlaygroundProps> = ({ agentName, onFin
             </div>
 
             {/* Right: Chat Interface */}
-            <div className="flex-1 glass-card rounded-3xl border border-white/10 flex flex-col overflow-hidden relative">
+            <div className="w-full md:flex-1 h-[60vh] md:h-full glass-card rounded-3xl border border-white/10 flex flex-col overflow-hidden relative order-1 md:order-2">
                 {/* Header */}
-                <div className="h-16 border-b border-white/5 flex items-center px-6 gap-3 bg-white/[0.02]">
-                    <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="h-14 md:h-16 border-b border-white/5 flex items-center px-4 md:px-6 gap-3 bg-white/[0.02]">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg text-sm md:text-base">
                         {agentName[0]}
                     </div>
                     <div>
-                        <h3 className="font-bold text-white">{agentName}</h3>
-                        <div className="flex items-center gap-1.5">
+                        <h3 className="font-bold text-white text-sm md:text-base">{agentName}</h3>
+                        <div className="flex items-center gap-1.5 md:hidden">
+                            <span className="text-[10px] text-zinc-400">Бот</span>
+                        </div>
+                        <div className="hidden md:flex items-center gap-1.5">
                             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                             <span className="text-xs text-zinc-400">Online</span>
                         </div>

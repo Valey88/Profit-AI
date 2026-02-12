@@ -5,7 +5,6 @@ import {
   MessageCircle,
   ShoppingBag,
   Globe,
-  User,
   Search,
   Instagram,
   CheckCheck,
@@ -136,7 +135,7 @@ export const InboxPage: React.FC = () => {
     <div className="flex h-full relative overflow-hidden">
 
       {/* 1. Chat List Panel (Glass) */}
-      <div className="w-[320px] glass-panel border-r border-white/5 flex flex-col h-full z-10 backdrop-blur-xl">
+      <div className={`w-full md:w-[320px] glass-panel border-r border-white/5 flex-col h-full z-10 backdrop-blur-xl ${selectedChatId ? 'hidden md:flex' : 'flex'}`}>
         <div className="p-4 border-b border-white/5">
           <div className="flex items-center justify-between mb-4 px-1">
             <h2 className="font-semibold text-lg text-white tracking-tight">Входящие</h2>
@@ -204,11 +203,11 @@ export const InboxPage: React.FC = () => {
       </div>
 
       {/* 2. Main Chat Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 bg-transparent relative z-0">
+      <div className={`flex-1 flex-col h-full min-w-0 bg-transparent relative z-0 ${selectedChatId ? 'flex' : 'hidden md:flex'}`}>
 
         {/* Quick Start Guide Overlay (Floating Glass) */}
         {showQuickStart && (
-          <div className="absolute top-6 left-6 right-6 glass-card p-4 rounded-2xl z-20 flex items-center justify-between animate-in slide-in-from-top-4 duration-500 border-indigo-500/20">
+          <div className="absolute top-6 left-6 right-6 glass-card p-4 rounded-2xl z-20 flex items-center justify-between animate-in slide-in-from-top-4 duration-500 border-indigo-500/20 hidden md:flex">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
                 <Info className="w-5 h-5 text-white" />
@@ -228,8 +227,14 @@ export const InboxPage: React.FC = () => {
         {selectedChat ? (
           <>
             {/* Header */}
-            <div className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.02] shrink-0 backdrop-blur-md">
-              <div className="flex items-center gap-4">
+            <div className="h-16 border-b border-white/5 flex items-center justify-between px-4 md:px-6 bg-white/[0.02] shrink-0 backdrop-blur-md">
+              <div className="flex items-center gap-3 md:gap-4">
+                <button
+                  className="md:hidden p-2 -ml-2 text-zinc-400 hover:text-white"
+                  onClick={() => setSelectedChatId(null)}
+                >
+                  <ArrowRight className="w-5 h-5 rotate-180" />
+                </button>
                 <div className="w-9 h-9 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-xl flex items-center justify-center text-zinc-400 font-bold border border-white/5 shadow-inner">
                   {selectedChat.client?.name?.charAt(0) || '?'}
                 </div>
@@ -241,14 +246,17 @@ export const InboxPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <div
                   onClick={toggleAIStatus}
                   className={`cursor-pointer flex items-center gap-3 px-3 py-1.5 rounded-xl border transition-all select-none duration-300 ${selectedChat.status === 'AI' ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-300 shadow-[0_0_15px_rgba(99,102,241,0.15)]' : 'bg-white/5 border-white/5 text-zinc-500 hover:border-white/20'}`}
                 >
                   <div className={`w-2 h-2 rounded-full shadow-[0_0_5px_currentColor] ${selectedChat.status === 'AI' ? 'bg-indigo-400 animate-pulse' : 'bg-zinc-600'}`}></div>
-                  <span className="text-xs font-bold tracking-wide">
+                  <span className="text-xs font-bold tracking-wide hidden sm:inline">
                     AI AGENT
+                  </span>
+                  <span className="text-xs font-bold tracking-wide sm:hidden">
+                    AI
                   </span>
                   {updateStatusMutation.isPending && <Loader2 className="w-3 h-3 animate-spin" />}
                 </div>
@@ -260,7 +268,7 @@ export const InboxPage: React.FC = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-8 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6">
               {chatLoading ? (
                 <div className="flex items-center justify-center h-full">
                   <Loader2 className="w-6 h-6 animate-spin text-zinc-500" />
@@ -271,8 +279,8 @@ export const InboxPage: React.FC = () => {
                     key={msg.id}
                     className={`flex w-full ${msg.role === 'user' ? 'justify-start' : 'justify-end'}`}
                   >
-                    <div className={`flex max-w-[70%] ${msg.role === 'user' ? 'flex-row' : 'flex-row-reverse'} gap-3 items-end group`}>
-                      <div className="w-6 h-6 rounded-md shrink-0 flex items-center justify-center text-[10px] font-bold overflow-hidden shadow-sm">
+                    <div className={`flex max-w-[85%] md:max-w-[70%] ${msg.role === 'user' ? 'flex-row' : 'flex-row-reverse'} gap-3 items-end group`}>
+                      <div className="w-6 h-6 rounded-md shrink-0 flex items-center justify-center text-[10px] font-bold overflow-hidden shadow-sm hidden sm:flex">
                         {msg.role === 'user' ? (
                           <div className="w-full h-full bg-zinc-900 border border-white/10 text-zinc-500 flex items-center justify-center">
                             {selectedChat.client?.name?.charAt(0) || '?'}
@@ -284,7 +292,7 @@ export const InboxPage: React.FC = () => {
                         )}
                       </div>
 
-                      <div className={`px-5 py-3.5 text-sm leading-relaxed backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${msg.role === 'user'
+                      <div className={`px-4 py-3 md:px-5 md:py-3.5 text-sm leading-relaxed backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${msg.role === 'user'
                         ? 'bg-zinc-900/60 text-zinc-200 border border-white/5 rounded-2xl rounded-bl-none shadow-sm'
                         : 'bg-gradient-to-br from-indigo-500/10 to-purple-500/10 text-indigo-100 border border-indigo-500/20 rounded-2xl rounded-br-none shadow-[0_0_15px_rgba(99,102,241,0.05)]'
                         }`}>
@@ -303,7 +311,7 @@ export const InboxPage: React.FC = () => {
             {/* Input */}
             <div className="p-4 border-t border-white/5 bg-black/20 backdrop-blur-md">
               <div className="relative flex items-end gap-2 p-2 bg-white/5 border border-white/10 rounded-2xl focus-within:ring-1 focus-within:ring-white/20 focus-within:border-white/20 transition-all shadow-inner">
-                <button className="p-2 text-zinc-500 hover:text-zinc-300 hover:bg-white/5 rounded-xl transition-colors">
+                <button className="p-2 text-zinc-500 hover:text-zinc-300 hover:bg-white/5 rounded-xl transition-colors hidden sm:block">
                   <Paperclip className="w-5 h-5" />
                 </button>
                 <div className="flex-1">
@@ -332,7 +340,7 @@ export const InboxPage: React.FC = () => {
             </div>
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-zinc-500">
+          <div className="flex-1 flex items-center justify-center text-zinc-500 hidden md:flex">
             Выберите чат для начала общения
           </div>
         )}
@@ -340,7 +348,7 @@ export const InboxPage: React.FC = () => {
 
       {/* 3. Client Details Sidebar (Glass) */}
       {selectedChat && (
-        <div className="w-[300px] glass-panel border-l border-white/5 flex flex-col z-10">
+        <div className="w-[300px] glass-panel border-l border-white/5 flex-col z-10 hidden xl:flex">
           <div className="p-6 border-b border-white/5">
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-bold text-zinc-100">Профиль</h3>

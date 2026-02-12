@@ -86,7 +86,7 @@ export const AgentSettingsPage: React.FC = () => {
         {/* Header */}
         <header className="mb-10 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-light text-white tracking-tight">Neuro Configuration</h1>
+            <h1 className="text-3xl font-light text-white tracking-tight">Настройка ИИ агента</h1>
             <p className="text-zinc-500 mt-2 text-sm">Настройте параметры нейросети и контекст базы знаний.</p>
           </div>
           <button

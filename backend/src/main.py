@@ -32,10 +32,18 @@ fastapi_app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS Configuration - allow all for widget embedding
+# CORS Configuration
+origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+    "https://profit-ai.vercel.app" # Example production domain
+]
+
 fastapi_app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for widget
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

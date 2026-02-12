@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Loader2, Mail, Lock, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { API_BASE_URL } from '@/shared/api/client';
 
 interface LoginPageProps {
     onLogin: (token: string) => void;
@@ -19,7 +20,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onSwitchToRegiste
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8001/auth/login', {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -42,7 +43,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onSwitchToRegiste
     return (
         <div className="min-h-screen bg-black flex items-center justify-center p-4">
             {/* Background Effects */}
-            <div className="fixed inset-0 pointer-events-none">
+            <div className="fixed inset-0 pointer-events-none hidden md:block">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
             </div>

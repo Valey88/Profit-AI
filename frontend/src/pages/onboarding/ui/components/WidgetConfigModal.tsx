@@ -34,24 +34,24 @@ export const WidgetConfigModal: React.FC<WidgetConfigModalProps> = ({ isOpen, on
     };
 
     return (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
-            <div className="bg-[#0f0f11] w-full max-w-6xl h-[80vh] rounded-3xl shadow-2xl border border-white/10 flex overflow-hidden relative">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-in fade-in duration-300 overflow-y-auto md:overflow-hidden">
+            <div className="bg-[#0f0f11] w-full max-w-6xl min-h-[80vh] md:h-[80vh] rounded-3xl shadow-2xl border border-white/10 flex flex-col md:flex-row overflow-hidden relative my-auto">
 
                 {/* Close Button */}
-                <button onClick={onClose} className="absolute top-6 right-6 z-50 p-2 bg-black/50 rounded-full hover:bg-white/10 transition-colors border border-white/5">
+                <button onClick={onClose} className="absolute top-4 right-4 z-[60] p-2 bg-black/50 rounded-full hover:bg-white/10 transition-colors border border-white/5">
                     <X className="w-5 h-5 text-white" />
                 </button>
 
                 {/* Left Panel: Configuration */}
-                <div className="w-1/3 bg-[#131316] border-r border-white/5 p-8 overflow-y-auto">
-                    <div className="flex items-center gap-3 mb-8">
+                <div className="w-full md:w-1/3 bg-[#131316] border-b md:border-b-0 md:border-r border-white/5 p-6 md:p-8 overflow-y-auto">
+                    <div className="flex items-center gap-3 mb-6 md:mb-8">
                         <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center border border-cyan-500/20">
                             <Globe className="w-5 h-5 text-cyan-400" />
                         </div>
                         <h2 className="text-xl font-bold text-white">Настройка Виджета</h2>
                     </div>
 
-                    <div className="space-y-8">
+                    <div className="space-y-6 md:space-y-8">
                         {/* Section: Appearance */}
                         <div>
                             <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-4 flex items-center gap-2">
@@ -60,7 +60,7 @@ export const WidgetConfigModal: React.FC<WidgetConfigModalProps> = ({ isOpen, on
 
                             <div className="mb-4">
                                 <label className="block text-sm text-zinc-400 mb-2">Основной цвет</label>
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 flex-wrap">
                                     {['#6366f1', '#ec4899', '#10b981', '#f59e0b', '#06b6d4'].map((color) => (
                                         <button
                                             key={color}
@@ -155,11 +155,11 @@ export const WidgetConfigModal: React.FC<WidgetConfigModalProps> = ({ isOpen, on
                 </div>
 
                 {/* Right Panel: Live Preview */}
-                <div className="w-2/3 bg-[#0a0a0c] relative flex items-center justify-center p-12 bg-grid-white/[0.02]">
+                <div className="w-full md:w-2/3 bg-[#0a0a0c] relative flex items-center justify-center p-4 md:p-12 bg-grid-white/[0.02] min-h-[400px] md:min-h-0">
                     {/* Mock Website Grid */}
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/10 via-black to-black opacity-50"></div>
 
-                    <div className="w-full h-full bg-[#ffffff] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col scale-95 border border-white/5">
+                    <div className="w-full h-full bg-[#ffffff] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col scale-[0.85] md:scale-95 border border-white/5">
                         {/* Mock Browser Header */}
                         <div className="h-8 bg-zinc-100 border-b flex items-center px-4 gap-2">
                             <div className="w-3 h-3 rounded-full bg-red-400"></div>

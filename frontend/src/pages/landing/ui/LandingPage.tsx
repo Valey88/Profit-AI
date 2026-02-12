@@ -41,62 +41,62 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister })
             </header>
 
             {/* Hero Section */}
-            <main className="relative z-10 pt-20 pb-20 px-6">
+            <main className="relative z-10 pt-20 pb-20 px-4 md:px-6">
                 <div className="max-w-5xl mx-auto text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
                         AI-Employee v2.0 Released
                     </div>
 
-                    <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-8 leading-[1.1] animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100">
+                    <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tight mb-8 leading-[1.1] animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100">
                         Ваш новый <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">цифровой отдел продаж</span>
                     </h1>
 
-                    <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+                    <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 px-2">
                         Profit Flow заменяет менеджеров: общается с клиентами, записывает на услуги и продает 24/7 во всех мессенджерах. Без выходных и зарплаты.
                     </p>
 
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300 w-full sm:w-auto px-4 sm:px-0">
                         <button
                             onClick={onRegister}
-                            className="w-full md:w-auto px-10 py-5 bg-white text-black text-lg font-bold rounded-full hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+                            className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white text-black text-lg font-bold rounded-full hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
                         >
                             <Zap className="w-5 h-5 fill-black" />
                             Создать сотрудника
                         </button>
-                        <button className="w-full md:w-auto px-10 py-5 bg-white/5 text-white border border-white/10 text-lg font-bold rounded-full hover:bg-white/10 transition-all backdrop-blur-sm flex items-center justify-center gap-3">
+                        <button className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white/5 text-white border border-white/10 text-lg font-bold rounded-full hover:bg-white/10 transition-all backdrop-blur-sm flex items-center justify-center gap-3">
                             <ArrowRight className="w-5 h-5" />
                             Демонстрация
                         </button>
                     </div>
 
                     {/* Features Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32 max-w-6xl mx-auto text-left">
-                        <div className="p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
-                            <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20">
-                                <MessageCircle className="w-7 h-7 text-indigo-400" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 md:mt-32 max-w-6xl mx-auto text-left px-2">
+                        <div className="p-6 md:p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20">
+                                <MessageCircle className="w-6 h-6 md:w-7 md:h-7 text-indigo-400" />
                             </div>
                             <h3 className="text-xl font-bold mb-3">Омни-канальность</h3>
-                            <p className="text-zinc-500 leading-relaxed">
+                            <p className="text-zinc-500 leading-relaxed text-sm md:text-base">
                                 Объединяем VK, Telegram, Avito и WhatsApp в одном окне. Вы никогда не пропустите заявку.
                             </p>
                         </div>
-                        <div className="p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
-                            <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
-                                <LayoutTemplate className="w-7 h-7 text-purple-400" />
+                        <div className="p-6 md:p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
+                                <LayoutTemplate className="w-6 h-6 md:w-7 md:h-7 text-purple-400" />
                             </div>
                             <h3 className="text-xl font-bold mb-3">База Знаний (RAG)</h3>
-                            <p className="text-zinc-500 leading-relaxed">
+                            <p className="text-zinc-500 leading-relaxed text-sm md:text-base">
                                 Загрузите PDF с прайсом, и AI мгновенно выучит ваши цены и услуги. Не нужно писать скрипты.
                             </p>
                         </div>
-                        <div className="p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
-                            <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 border border-cyan-500/20">
-                                <CheckCircle2 className="w-7 h-7 text-cyan-400" />
+                        <div className="p-6 md:p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-colors">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 border border-cyan-500/20">
+                                <CheckCircle2 className="w-6 h-6 md:w-7 md:h-7 text-cyan-400" />
                             </div>
                             <h3 className="text-xl font-bold mb-3">Авто-запись</h3>
-                            <p className="text-zinc-500 leading-relaxed">
+                            <p className="text-zinc-500 leading-relaxed text-sm md:text-base">
                                 Бот интегрируется с YClients / Dikidi и сам записывает клиентов в свободные слоты календаря.
                             </p>
                         </div>

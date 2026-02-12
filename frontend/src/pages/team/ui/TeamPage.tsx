@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Plus, Shield, MoreHorizontal, Clock, Smartphone, Trash2, X, Loader2 } from 'lucide-react';
+import { Plus, Shield, MoreHorizontal, Clock, Smartphone, Trash2, X, Loader2 } from 'lucide-react';
 import { useUsers, useInviteUser, useDeleteUser } from '@/shared/api/hooks';
 import type { User } from '@/shared/api/client';
 
@@ -94,8 +94,8 @@ export const TeamPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="glass-card rounded-3xl border border-white/10 overflow-hidden">
-          <table className="w-full text-left border-collapse">
+        <div className="glass-card rounded-3xl border border-white/10 overflow-hidden overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[800px]">
             <thead className="bg-white/5 border-b border-white/5">
               <tr>
                 <th className="px-6 py-4 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">Пользователь</th>
